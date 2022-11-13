@@ -1,0 +1,16 @@
+package project;
+
+public interface interface1 {
+	
+	public void gather();
+	
+	public void bmi();
+	
+	public void category();
+	
+	public void lists();
+	
+	
+	
+	
+}
