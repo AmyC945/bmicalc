@@ -1,0 +1,138 @@
+package project;
+
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+class patient implements interface1 {
+	
+	Scanner myObj = new Scanner(System.in); 
+	
+	public String name;
+	public Double weight;
+	public Double height;
+	public Double bmi; 
+	public String birthday;
+	public String category;
+	public String insurance;
+	public List<List<String>> outputValues = new ArrayList<>();
+	
+	
+	@Override
+	public void gather() {
+		System.out.println("Please enter the patient's name.");
+		name = myObj.nextLine();
+		System.out.println("Please enter the patient's birthday.");
+		birthday = myObj.nextLine();	
+		System.out.println("Please enter the patient's weight in kilograms.");
+		weight = myObj.nextDouble();
+		System.out.println("Please enter the patient's height in kilograms.");
+		height = myObj.nextDouble();
+		myObj.nextLine();
+	}
+	
+
+	@Override
+	public void bmi() {
+		bmi = weight / (height * height);
+	}
+	
+	@Override
+	public void category() {
+		if (bmi < 18.5) {
+			category = "Underweight";
+			insurance = "Low";
+		} else if (bmi < 24.9) {
+			category = "Normal";
+			insurance = "Low";
+		} else if (bmi < 29.9) {
+			category = "Overweight";
+			insurance = "High";
+		} else {
+			category = "Obesity";
+			insurance = "Highest";
+		}
+	}
+	
+	@Override
+	public void lists() {
+		List<String> outputValue = new ArrayList<>();
+
+		outputValue.add(name);
+		outputValue.add(category);
+		outputValue.add(insurance);
+
+		outputValues.add(outputValue);
+
+	}	
+	}
+	
+
+public class myFirstClass
+
+{
+
+	public static void main(String[] args) {	
+
+Scanner myObj = new Scanner(System.in); 
+
+		System.out.println("Hello! This is a program to calculate insurance payment based on BMI index.");
+		
+		patient patient = new patient();
+		
+		try (BufferedWriter bWriter = new BufferedWriter(new FileWriter("C:\\Users\\amyco\\Java\\file2.txt"))){
+		
+			while(true)  {
+				
+				 patient.gather();
+				 patient.bmi();
+				 patient.category();
+				 patient.lists();
+
+System.out.println("Press any key to continue or 'q' to quit.");
+if(myObj.nextLine().equals("q")) {
+	break;
+}
+			}
+
+System.out.println("Thank you!");
+
+StringBuilder sb = new StringBuilder();
+sb.append("Name");
+sb.append(",");
+sb.append("BMI Category");
+sb.append(",");
+sb.append("Insurance");
+sb.append(System.lineSeparator());
+
+
+bWriter.write(sb.toString());
+
+for(int i=0;i<patient.outputValues.size();i++) {
+
+	sb.delete(0, sb.length());
+
+sb.append(patient.outputValues.get(i).get(0));
+sb.append(",");
+sb.append(patient.outputValues.get(i).get(1));
+sb.append(",");
+sb.append(patient.outputValues.get(i).get(2));
+sb.append(System.lineSeparator());
+
+bWriter.write(sb.toString());
+}
+		}
+catch (Exception e){
+	System.out.print(e.getMessage());
+}
+finally {
+	myObj.close();
+	System.out.println("The program is exiting...");
+}
+
+
+}
+	}
+
+
